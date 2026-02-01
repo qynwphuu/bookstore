@@ -1,33 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Book List</title>
 </head>
+
 <body>
-<h2>Books</h2>
+    <h2>Books</h2>
 
-<table border="1">
-    <tr>
-        <th>Author</th>
-        <th>Title</th>
-        <th>ISBN</th>
-        <th>Year</th>
-    </tr>
+    <table border="1">
+        <tr>
+            <th>Author</th>
+            <th>Title</th>
+            <th>ISBN</th>
+            <th>Year</th>
+        </tr>
 
-    <tr th:each="book : ${books}">
-        <td th:text="${book.author}"></td>
-        <td th:text="${book.title}"></td>
-        <td th:text="${book.isbn}"></td>
-        <td th:text="${book.publicationYear}"></td>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.isbn}"></td>
+            <td th:text="${book.publicationYear}"></td>
 
-        <td> <a th:href="@{'/delete/' + ${book.id}}">Delete</a> </td>
+            <td>
+                <a th:href="@{'/delete/' + ${book.id}}">Delete</a> |
+                <a th:href="@{'/edit/' + ${book.id}}">Edit</a>
+            </td>
 
-    </tr>
+        </tr>
 
-</table>
-<br>
- <a href="/add">Add Book</a>
+    </table>
+    <br>
+    <a href="/add">Add Book</a>
 
 </body>
+
 </html>
