@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 
 import fi.haagahelia.backend.bookstore.domain.Book;
 import fi.haagahelia.backend.bookstore.domain.BookRepository;
+import fi.haagahelia.backend.bookstore.domain.Category;
+import fi.haagahelia.backend.bookstore.domain.CategoryRepository;
 
 @SpringBootApplication
 public class BookstoreApplication {
@@ -31,6 +33,15 @@ public class BookstoreApplication {
 					1945,
 					"2212343-5",
 					29.99));
+		};
+	}
+
+	@Bean
+	CommandLineRunner demo(CategoryRepository crepository) {
+		return (args) -> {
+			crepository.save(new Category("IT"));
+			crepository.save(new Category("Fantasy"));
+			crepository.save(new Category("History"));
 		};
 	}
 
