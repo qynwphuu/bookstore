@@ -39,7 +39,7 @@ public class BookstoreApplication {
 	@Bean
 	CommandLineRunner demo(CategoryRepository crepository) {
 		return (args) -> {
-			crepository.save(new Category("IT"));
+			crepository.save(new Category("Science Fiction"));
 			crepository.save(new Category("Fantasy"));
 			crepository.save(new Category("History"));
 		};
