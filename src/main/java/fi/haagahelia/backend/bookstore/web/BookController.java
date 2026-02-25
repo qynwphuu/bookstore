@@ -1,6 +1,5 @@
 package fi.haagahelia.backend.bookstore.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +15,11 @@ import fi.haagahelia.backend.bookstore.domain.BookRepository;
 public class BookController {
 
     private final BookRepository bookRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private CategoryRepository crepository;
-
-    public BookController(BookRepository bookRepository) {
+    public BookController(BookRepository bookRepository, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/booklist")
@@ -33,7 +31,7 @@ public class BookController {
     @GetMapping("/add")
     public String addBookForm(Model model) {
         model.addAttribute("book", new Book());
-        model.addAttribute("categories", crepository.findAll());
+        model.addAttribute("categories", categoryRepository.findAll());
         return "addbook";
     }
 
@@ -53,7 +51,7 @@ public class BookController {
     public String editBook(@PathVariable("id") Long id, Model model) {
         Book book = bookRepository.findById(id).orElse(null);
         model.addAttribute("book", book);
-        model.addAttribute("categories", crepository.findAll());
+        model.addAttribute("categories", categoryRepository.findAll());
         return "editbook";
     }
 }
