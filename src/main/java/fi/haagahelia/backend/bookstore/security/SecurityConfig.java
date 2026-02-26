@@ -11,6 +11,23 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
+        private UserDetailServiceImpl userDetailsService;
+
+        public SecurityConfig(UserDetailServiceImpl userDetailsService) {
+                this.userDetailsService = userDetailsService;
+        }
+
+        // optional, only for older versions
+        /*
+         * @Autowired
+         * public void configureGlobal(AuthenticationManagerBuilder auth) throws
+         * Exception {
+         * auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder()
+         * );
+         * }
+         */
+
+        // the original, in-memory authentication
         @Bean
         public SecurityFilterChain configure(HttpSecurity http) throws Exception {
                 http
@@ -26,6 +43,7 @@ public class SecurityConfig {
                 return http.build();
         }
 
+        // then apply permanent sign in
         @Bean
         public PasswordEncoder passwordEncoder() {
                 return new BCryptPasswordEncoder();

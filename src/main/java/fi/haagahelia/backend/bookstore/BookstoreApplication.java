@@ -49,9 +49,11 @@ public class BookstoreApplication {
 	@Bean
 	public CommandLineRunner initUsers(UserRepository repository) {
 		return args -> {
-			User user1 = new User("user", "$2a$12$j/SgoiwjvY2ssbp5G/PbnuAamMAqGrc4hriMxvpFqjsyA77aFnXAe", "USER");
+			User user1 = new User("user", "user@example.com",
+					"$2a$12$j/SgoiwjvY2ssbp5G/PbnuAamMAqGrc4hriMxvpFqjsyA77aFnXAe", "USER");
 			// pass is "password"
-			User user2 = new User("admin", "$2a$12$loeJmqaj30YeodKSDhiAHuGfBRhGuIouZPUvg0IjxHKnP765KArTa", "ADMIN");
+			User user2 = new User("admin", "admin@example.com",
+					"$2a$12$loeJmqaj30YeodKSDhiAHuGfBRhGuIouZPUvg0IjxHKnP765KArTa", "ADMIN");
 			// pass is "admin"
 			repository.save(user1);
 			repository.save(user2);

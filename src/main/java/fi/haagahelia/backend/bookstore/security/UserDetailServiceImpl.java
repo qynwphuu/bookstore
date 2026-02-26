@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import fi.haagahelia.backend.bookstore.domain.User;
 import fi.haagahelia.backend.bookstore.domain.UserRepository;
 
-// Service for signing in, up users
+// Service for signing in, signing up users
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
     private final UserRepository repository;
