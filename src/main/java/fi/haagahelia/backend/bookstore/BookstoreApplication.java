@@ -9,6 +9,8 @@ import fi.haagahelia.backend.bookstore.domain.Book;
 import fi.haagahelia.backend.bookstore.domain.BookRepository;
 import fi.haagahelia.backend.bookstore.domain.Category;
 import fi.haagahelia.backend.bookstore.domain.CategoryRepository;
+import fi.haagahelia.backend.bookstore.domain.User;
+import fi.haagahelia.backend.bookstore.domain.UserRepository;
 
 @SpringBootApplication
 public class BookstoreApplication {
@@ -36,11 +38,23 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	CommandLineRunner demo(CategoryRepository crepository) {
+	CommandLineRunner initCategories(CategoryRepository crepository) {
 		return (args) -> {
 			crepository.save(new Category("Science Fiction"));
 			crepository.save(new Category("Fantasy"));
 			crepository.save(new Category("History"));
+		};
+	}
+
+	@Bean
+	public CommandLineRunner initUsers(UserRepository repository) {
+		return args -> {
+			User user1 = new User("user", "$2a$12$j/SgoiwjvY2ssbp5G/PbnuAamMAqGrc4hriMxvpFqjsyA77aFnXAe", "USER");
+			// pass is "password"
+			User user2 = new User("admin", "$2a$12$loeJmqaj30YeodKSDhiAHuGfBRhGuIouZPUvg0IjxHKnP765KArTa", "ADMIN");
+			// pass is "admin"
+			repository.save(user1);
+			repository.save(user2);
 		};
 	}
 
