@@ -12,7 +12,6 @@ import fi.haagahelia.backend.bookstore.domain.CategoryRepository;
 
 @SpringBootApplication
 public class BookstoreApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(BookstoreApplication.class, args);
 	}

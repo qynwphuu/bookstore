@@ -22,6 +22,16 @@ public class BookController {
         this.categoryRepository = categoryRepository;
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "redirect:/login";
+    }
+
     @GetMapping("/booklist")
     public String bookList(Model model) {
         model.addAttribute("books", bookRepository.findAll());
@@ -54,4 +64,5 @@ public class BookController {
         model.addAttribute("categories", categoryRepository.findAll());
         return "editbook";
     }
+
 }
