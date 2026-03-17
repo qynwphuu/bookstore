@@ -9,4 +9,6 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 @RepositoryRestController
 public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findByTitle(@Param("title") String title);
+
+    List<Book> findByIsbn(@Param("isbn") String isbn);
 }

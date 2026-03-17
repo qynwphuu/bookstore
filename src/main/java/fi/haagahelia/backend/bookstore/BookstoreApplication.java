@@ -19,44 +19,68 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initDatabase(BookRepository repository) {
+	public CommandLineRunner initDatabase(BookRepository repository, CategoryRepository crepository) {
 		return args -> {
-			repository.save(new Book(
-					"A Farewell to Arms",
-					"Ernest Hemingway",
-					1929,
-					"1232323-21",
-					19.99));
+			Category history = crepository.findByName("History").stream().findFirst().orElse(null);
+			if (history == null) {
+				history = crepository.save(new Category("History"));
+			}
 
-			repository.save(new Book(
-					"Animal Farm",
-					"George Orwell",
-					1945,
-					"2212343-5",
-					29.99));
+			if (repository.findByIsbn("1232323-21").isEmpty()) {
+				Book firstBook = new Book(
+						"A Farewell to Arms",
+						"Ernest Hemingway",
+						1929,
+						"1232323-21",
+						19.99);
+				firstBook.setCategory(history);
+				repository.save(firstBook);
+			}
+
+			if (repository.findByIsbn("2212343-5").isEmpty()) {
+				Book secondBook = new Book(
+						"Animal Farm",
+						"George Orwell",
+						1945,
+						"2212343-5",
+						29.99);
+				secondBook.setCategory(history);
+				repository.save(secondBook);
+			}
 		};
 	}
 
 	@Bean
 	CommandLineRunner initCategories(CategoryRepository crepository) {
 		return (args) -> {
-			crepository.save(new Category("Science Fiction"));
-			crepository.save(new Category("Fantasy"));
-			crepository.save(new Category("History"));
+			if (crepository.findByName("Science Fiction").isEmpty()) {
+				crepository.save(new Category("Science Fiction"));
+			}
+			if (crepository.findByName("Fantasy").isEmpty()) {
+				crepository.save(new Category("Fantasy"));
+			}
+			if (crepository.findByName("History").isEmpty()) {
+				crepository.save(new Category("History"));
+			}
 		};
 	}
 
 	@Bean
 	public CommandLineRunner initUsers(UserRepository repository) {
 		return args -> {
-			User user1 = new User("user", "user@example.com",
-					"$2a$12$j/SgoiwjvY2ssbp5G/PbnuAamMAqGrc4hriMxvpFqjsyA77aFnXAe", "USER");
-			// pass is "password"
-			User user2 = new User("admin", "admin@example.com",
-					"$2a$12$loeJmqaj30YeodKSDhiAHuGfBRhGuIouZPUvg0IjxHKnP765KArTa", "ADMIN");
-			// pass is "admin"
-			repository.save(user1);
-			repository.save(user2);
+			if (repository.findByUsername("user") == null) {
+				User user1 = new User("user", "user@example.com",
+						"$2a$12$j/SgoiwjvY2ssbp5G/PbnuAamMAqGrc4hriMxvpFqjsyA77aFnXAe", "USER");
+				// pass is "password"
+				repository.save(user1);
+			}
+
+			if (repository.findByUsername("admin") == null) {
+				User user2 = new User("admin", "admin@example.com",
+						"$2a$12$loeJmqaj30YeodKSDhiAHuGfBRhGuIouZPUvg0IjxHKnP765KArTa", "ADMIN");
+				// pass is "admin"
+				repository.save(user2);
+			}
 		};
 	}
 
